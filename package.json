@@ -5,11 +5,13 @@
   "private": true,
   "scripts": {
     "build": "npm run compile && npm run bundle && npm run copy && npm run test",
-    "compile": "tsc --outDir ./build/sources -p tsconfig.json",
+    "compile": "tsc -p tsconfig.json",
     "bundle": "webpack --display-error-details",
     "copy": "cpx static/index.html ./build/out",
     "test": "mocha --config .mocharc.js",
-    "clean": "rimraf ./build/*"
+    "clean": "rimraf ./build/*",
+    "watchCompile": "tsc -p tsconfig.json --incremental -w",
+    "watchBundle": "webpack -w"
   },
   "dependencies": {
     "immutable": "^4.0.0-rc.12",
