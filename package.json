@@ -4,12 +4,11 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "npm run compile && npm run bundle && npm run copy && npm run test",
-    "compile": "tsc -p tsconfig.json",
-    "bundle": "webpack --display-error-details",
-    "copy": "cpx static/index.html ./build/out",
-    "test": "mocha --config .mocharc.js",
-    "clean": "rimraf ./build/*",
+    "build": "gulp build",
+    "bundle": "gulp bundle",
+    "copy": "gulp copy",
+    "test": "gulp test",
+    "clean": "gulp clean",
     "watchCompile": "tsc -p tsconfig.json --incremental -w",
     "watchBundle": "webpack -w"
   },
@@ -53,6 +52,8 @@
     "cpx": "^1.5.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
@@ -61,6 +62,7 @@
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2",
     "webpack": "^4.35.2",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.5",
+    "webpack-stream": "^5.2.1"
   }
 }
