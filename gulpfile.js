@@ -3,7 +3,6 @@ const ts = require( "gulp-typescript" )
 const webpack = require( "webpack-stream" )
 const webpackConfig = require( './webpack.config.js' )
 const rimraf = require( "rimraf" )
-const Mocha = require( "mocha" )
 
 
 function compile() {
@@ -33,24 +32,19 @@ function watch() {
 }
 
 function test( cb ) {
-    const testDir = "./build/sources/test"
-    const path = require( "path" )
-    const fs = require( "fs" )
-    const mocha = new Mocha( require("./.mocharc.js") )
-    fs.readdir( testDir, "utf8", ( err, files ) => {
-        files.filter( file => file.endsWith( ".js" ) )
-             .forEach( file => mocha.addFile( path.join( testDir, file ) ) )
-        mocha.run( () => {
-            cb()
-        } )
+    // We prefer to run tests in another process
+    const exec = require( "child_process" ).exec
+    exec( "npx mocha --config .mocharc.js", ( error, stdout ) => {
+        console.log( stdout )
+        error && console.log( error )
+        cb( error )
     } )
-    cb()
 }
 
 const bundleTask = gulp.series( compile, bundle )
 
 const buildTask = gulp.parallel(
-    gulp.series( bundleTask, test ),
+    gulp.series( compile, gulp.parallel( bundle, test ) ),
     copy
 )
 
