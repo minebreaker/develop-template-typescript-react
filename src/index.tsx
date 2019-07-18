@@ -1,18 +1,15 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-
-const Lazy = React.lazy(() => import("./lazy"))
+import { Application } from "./application"
 
 
 export function main() {
     ReactDOM.render(
-        <React.Suspense fallback={<p>Loading</p>}>
-            <Lazy/>
-        </React.Suspense>,
-        document.getElementById("app")
+        <Application />,
+        document.getElementById( "app" )
     )
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener( "DOMContentLoaded", () => {
     main()
-})
+} )
