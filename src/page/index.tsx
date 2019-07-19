@@ -1,14 +1,16 @@
 import * as React from "react"
 import { Route } from "../router"
 import { Link } from "react-router5"
-import sample from "./sample/sample"
+import user from "./user"
+import todo from "./todo"
 
 
 function Index() {
     return (
         <div>
             <h1>Home page</h1>
-            <Link routeName={sample.name}>Go another page</Link>
+            <p><Link routeName={todo.name}>Todo</Link></p>
+            <p><Link routeName={user.name}>Manage users</Link></p>
         </div>
     )
 }

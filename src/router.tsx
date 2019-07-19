@@ -1,36 +1,38 @@
 import _ from "lodash/fp"
 import * as React from "react"
 import { ReactElement } from "react"
-import createRouter, { Router } from "router5"
+import createRouter, { Router, Route as Router5Route } from "router5"
 import browserPlugin from "router5-plugin-browser"
 import index from "./page/index"
-import sample from "./page/sample/sample"
+import user from "./page/user"
+import todo from "./page/todo"
 
 
-type Routes = "index" | "sample"
-
-export interface Route {
-    name: Routes
+export interface Route extends Router5Route {
+    name: string
     path: string
-    component: ReactElement<any, any>
+    component: ReactElement<{}, any>
 }
 
-export function configureRouteStarted(): Router {
+export function configureRoute(): Router {
 
     const router = createRouter( [
-        { name: index.name, path: index.path },
-        { name: sample.name, path: sample.path }
+        index,
+        user,
+        todo
     ], { defaultRoute: index.name } )
 
     router.usePlugin( browserPlugin() )
 
-    router.start( index.path )  // FIXME
-
     return router
 }
 
+const tup = <T, U>(arg1: T, arg2: U) => [arg1, arg2] as [T, U]
+const match = ( route: Route ) => tup(_.eq(route.name), () => route.component)
+
 export const getComponentOnRoute: ( name: string ) => JSX.Element = _.cond( [
-    [_.eq( index.name ), () => index.component],
-    [_.eq( sample.name ), () => sample.component],
+    match(index),
+    match(todo),
+    match(user),
     [_.stubTrue, () => <p>Not found.</p>]
 ] )

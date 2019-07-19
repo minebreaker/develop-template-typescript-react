@@ -1,13 +1,17 @@
+import "core-js"
+
 import * as React from "react"
 import * as ReactDOM from "react-dom"
-import { Application } from "./application"
+import {Application, router} from "./application"
 
 
 export function main() {
-    ReactDOM.render(
-        <Application />,
-        document.getElementById( "app" )
-    )
+    router.start(() => {
+        ReactDOM.render(
+            <Application />,
+            document.getElementById( "app" )
+        )
+    })
 }
 
 document.addEventListener( "DOMContentLoaded", () => {
