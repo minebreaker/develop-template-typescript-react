@@ -2,8 +2,6 @@ import * as React from "react"
 import {createMuiTheme, CssBaseline, makeStyles} from "@material-ui/core"
 import {ThemeProvider} from "@material-ui/styles"
 import {RouterProvider} from "react-router5"
-import {MuiPickersUtilsProvider} from "@material-ui/pickers"
-import LuxonUtils from "@date-io/luxon"
 import {configureRoute, getComponentOnRoute} from "./router"
 import {Provider as StoreProvider, useSelector} from "react-redux"
 import rootReducer from "./reducer"
@@ -51,9 +49,7 @@ export function Application() {
             <StoreProvider store={store}>
                 <CssBaseline/>
                 <ThemeProvider theme={theme}>
-                    <MuiPickersUtilsProvider utils={LuxonUtils}>
-                        <RouteComponent/>
-                    </MuiPickersUtilsProvider>
+                    <RouteComponent/>
                 </ThemeProvider>
             </StoreProvider>
         </RouterProvider>
