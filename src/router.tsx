@@ -9,8 +9,6 @@ import todo from "./page/todo"
 
 
 export interface Route extends Router5Route {
-    name: string
-    path: string
     component: ReactElement<{}, any>
 }
 
@@ -27,12 +25,13 @@ export function configureRoute(): Router {
     return router
 }
 
-const tup = <T, U>(arg1: T, arg2: U) => [arg1, arg2] as [T, U]
-const match = ( route: Route ) => tup(_.eq(route.name), () => route.component)
+function match( route: Route ): [ ( path: string ) => boolean, () => ReactElement<{}, any> ] {
+    return [ _.eq( route.name ), () => route.component ]
+}
 
 export const getComponentOnRoute: ( name: string ) => JSX.Element = _.cond( [
-    match(index),
-    match(todo),
-    match(user),
-    [_.stubTrue, () => <p>Not found.</p>]
+    match( index ),
+    match( todo ),
+    match( user ),
+    [ _.stubTrue, () => <p>Not found.</p> ]
 ] )
